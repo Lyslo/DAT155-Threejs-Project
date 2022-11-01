@@ -1,6 +1,6 @@
 "use strict";
 
-import * as THREE from "./three.module.js";
+import * as THREE from "./build/three.module.js";
 
 import { getHeightmapData } from "./utils.js";
 import TextureSplattingMaterial from "./TextureSplattingMaterial.js";
@@ -16,7 +16,7 @@ renderer.setClearColor(white, 1.0);
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-camera.position.z += 10;
+camera.position.z += 0;
 camera.position.x += 10;
 camera.position.y += 10;
 
