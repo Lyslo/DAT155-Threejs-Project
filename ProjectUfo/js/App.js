@@ -2,6 +2,7 @@
 
 import {PerspectiveCamera, Scene, WebGLRenderer} from "./build/three.module.js";
 import SolarSystem from "./Ufo.js";
+import {VRButton} from "./build/VRButton.js";
 
 export default class App {
     constructor() {
@@ -35,9 +36,11 @@ export default class App {
         //Forteller renderer hvor stort vinduet er
         this.renderer.setSize(this.width, this.height);
 
+        this.renderer.xr.enabled = true;
         //"Sender tilbake" canvas-elementet til index.html sin <body>
         document.body.appendChild(this.renderer.domElement);
-
+        //Lager knappen som brukes til å gå inn i VR
+        document.body.append(VRButton.createButton(this.renderer));
         //Oppretter instans av SolarSystem vi har laget
         this.solarSystem = new SolarSystem(this.scene);
 
@@ -55,7 +58,7 @@ export default class App {
 
         //Ber nettleseren om å kalle på render når den er klar for en ny frame
         //this.render.bind(this) - Triks for at javascript skal skjønne skikkelig hvilken funksjon vi refererer til
-        window.requestAnimationFrame(this.render.bind(this));
+        //window.requestAnimationFrame(this.render.bind(this));
     }
 }
 
