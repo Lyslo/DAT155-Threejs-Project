@@ -4,6 +4,7 @@ import * as THREE from "./build/three.module.js";
 
 import { getHeightmapData } from "./utils.js";
 import TextureSplattingMaterial from "./TextureSplattingMaterial.js";
+import {VRButton} from "./build/VRButton.js";
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector("canvas"),
@@ -12,6 +13,12 @@ const renderer = new THREE.WebGLRenderer({
 
 const white = new THREE.Color(THREE.Color.NAMES.white);
 renderer.setClearColor(white, 1.0);
+
+// VR implementation
+renderer.xr.enabled = true;
+document.body.appendChild(renderer.domElement);
+document.body.append(VRButton.createButton(renderer));
+// VR implementation end
 
 const scene = new THREE.Scene();
 
