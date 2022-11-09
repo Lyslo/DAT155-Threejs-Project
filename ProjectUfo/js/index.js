@@ -24,7 +24,7 @@ document.body.append(VRButton.createButton(renderer));
 
 
 
-
+//Camera
 const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
 camera.position.z += 0;
 camera.position.x += 10;
@@ -32,6 +32,7 @@ camera.position.y += 10;
 
 camera.lookAt(0, 0, 0);
 
+//Camera controls - camera orbits the object
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.update();
 
@@ -42,7 +43,8 @@ scene.add(camera);
 const axesHelper = new THREE.AxesHelper(1);
 scene.add(axesHelper);
 
-const sun = new THREE.DirectionalLight(white, 1.0);
+//Light
+const sun = new THREE.DirectionalLight(white, 1.2);
 scene.add(sun);
 
 class TerrainGeometry extends THREE.PlaneGeometry {
@@ -58,7 +60,7 @@ class TerrainGeometry extends THREE.PlaneGeometry {
     }
   }
 }
-
+//Skybox
 const skybox = new THREE.CubeTextureLoader().load([
   'images/xpos.png',
   'images/xneg.png',
@@ -67,14 +69,18 @@ const skybox = new THREE.CubeTextureLoader().load([
   'images/zpos.png',
   'images/zneg.png'
 ]);
+
 scene.background = skybox;
+
+
+//Terrain
 const terrainImage = new Image();
 terrainImage.onload = () => {
 
   const size = 128;
   const height = 5;
 
-  const geometry = new TerrainGeometry(50, 128, 13, terrainImage);
+  const geometry = new TerrainGeometry(70, 128, 17, terrainImage);
 
   const grass = new THREE.TextureLoader().load('images/grass.png');
   const rock = new THREE.TextureLoader().load('images/rock.png');
