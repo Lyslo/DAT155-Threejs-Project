@@ -13,6 +13,7 @@ const renderer = new THREE.WebGLRenderer({
 });
 
 const white = new THREE.Color(THREE.Color.NAMES.white);
+const gray = new THREE.Color((THREE.Color.NAMES.gray));
 renderer.setClearColor(white, 1.0);
 
 // VR implementation
@@ -21,7 +22,7 @@ document.body.appendChild(renderer.domElement);
 document.body.append(VRButton.createButton(renderer));
 // VR implementation end
 
-
+const raycaster = new THREE.Raycaster();
 
 
 //Camera
@@ -46,6 +47,10 @@ scene.add(axesHelper);
 //Light
 const sun = new THREE.DirectionalLight(white, 1.2);
 scene.add(sun);
+
+
+// Fog
+scene.fog = new THREE.FogExp2(gray,0.03);
 
 class TerrainGeometry extends THREE.PlaneGeometry {
   constructor(size, resolution, height, image) {
@@ -109,6 +114,7 @@ terrainImage.onload = () => {
 };
 
 terrainImage.src = 'images/terrain.png';
+
 
 
 function updateRendererSize() {
