@@ -5,6 +5,7 @@ import * as THREE from "./build/three.module.js";
 import { getHeightmapData } from "./utils.js";
 import TextureSplattingMaterial from "./TextureSplattingMaterial.js";
 import {VRButton} from "./build/VRButton.js";
+import {OrbitControls} from "./build/OrbitControls.js";
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector("canvas"),
@@ -20,7 +21,9 @@ document.body.appendChild(renderer.domElement);
 document.body.append(VRButton.createButton(renderer));
 // VR implementation end
 
-const scene = new THREE.Scene();
+
+
+
 
 const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
 camera.position.z += 0;
@@ -28,6 +31,11 @@ camera.position.x += 10;
 camera.position.y += 10;
 
 camera.lookAt(0, 0, 0);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.update();
+
+const scene = new THREE.Scene();
 
 scene.add(camera);
 
@@ -51,6 +59,15 @@ class TerrainGeometry extends THREE.PlaneGeometry {
   }
 }
 
+const skybox = new THREE.CubeTextureLoader().load([
+  'images/xpos.png',
+  'images/xneg.png',
+  'images/ypos.png',
+  'images/yneg.png',
+  'images/zpos.png',
+  'images/zneg.png'
+]);
+scene.background = skybox;
 const terrainImage = new Image();
 terrainImage.onload = () => {
 
