@@ -74,7 +74,7 @@ terrainImage.onload = () => {
   const size = 128;
   const height = 5;
 
-  const geometry = new TerrainGeometry(20, 128, 5, terrainImage);
+  const geometry = new TerrainGeometry(50, 128, 13, terrainImage);
 
   const grass = new THREE.TextureLoader().load('images/grass.png');
   const rock = new THREE.TextureLoader().load('images/rock.png');
@@ -83,12 +83,12 @@ terrainImage.onload = () => {
   grass.wrapS = THREE.RepeatWrapping;
   grass.wrapT = THREE.RepeatWrapping;
 
-  grass.repeat.multiplyScalar(size / 8);
+  grass.repeat.multiplyScalar(size /2 );
 
   rock.wrapS = THREE.RepeatWrapping;
   rock.wrapT = THREE.RepeatWrapping;
 
-  rock.repeat.multiplyScalar(size / 8);
+  rock.repeat.multiplyScalar(size / 50);
 
   const material = new TextureSplattingMaterial({
     color: THREE.Color.NAMES.white,
