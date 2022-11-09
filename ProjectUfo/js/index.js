@@ -6,6 +6,7 @@ import { getHeightmapData } from "./utils.js";
 import TextureSplattingMaterial from "./TextureSplattingMaterial.js";
 import {VRButton} from "./build/VRButton.js";
 import {OrbitControls} from "./build/OrbitControls.js";
+import {Water} from "./build/Water2.js";
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector("canvas"),
@@ -20,9 +21,6 @@ renderer.xr.enabled = true;
 document.body.appendChild(renderer.domElement);
 document.body.append(VRButton.createButton(renderer));
 // VR implementation end
-
-
-
 
 
 const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
@@ -44,6 +42,34 @@ scene.add(axesHelper);
 
 const sun = new THREE.DirectionalLight(white, 1.0);
 scene.add(sun);
+
+//river
+
+const tLoader = new THREE.TextureLoader();
+let s = 1; //Times texture repeats horizontally and vertically
+
+const disMap = tLoader.load("../images/riverheightmap.png"); //heightmap for river
+disMap.wrapS = disMap.wrapT = THREE.RepeatWrapping;
+disMap.repeat.set( s, s );
+
+const flowMap = tLoader.load("../images/flowmap.png");
+
+const waterGeometry = new THREE.PlaneGeometry(20, 20);
+
+const water = new Water(waterGeometry, {
+  scale: 1,
+  textureWidth: 512,
+  textureHeight: 512,
+  flowSpeed: 0.04,
+  reflectivity: 0.35,
+  flowMap: flowMap
+});
+
+water.position.y = 1.2;
+water.rotation.x = -Math.PI/2;
+scene.add(water);
+
+//end river
 
 class TerrainGeometry extends THREE.PlaneGeometry {
   constructor(size, resolution, height, image) {
